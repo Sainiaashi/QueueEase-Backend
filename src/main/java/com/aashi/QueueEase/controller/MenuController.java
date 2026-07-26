@@ -6,6 +6,7 @@ import com.aashi.QueueEase.service.MenuService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,21 +29,25 @@ public class MenuController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<MenuItem> createItem(@Valid @RequestBody MenuItemRequest request) {
         return ResponseEntity.ok(menuService.createItem(request));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<MenuItem> updateItem(@PathVariable Long id, @Valid @RequestBody MenuItemRequest request) {
         return ResponseEntity.ok(menuService.updateItem(id, request));
     }
 
     @PatchMapping("/{id}/toggle-availability")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<MenuItem> toggleAvailability(@PathVariable Long id) {
         return ResponseEntity.ok(menuService.toggleAvailability(id));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<String> deleteItem(@PathVariable Long id) {
         menuService.deleteItem(id);
         return ResponseEntity.ok("Menu item deleted");
