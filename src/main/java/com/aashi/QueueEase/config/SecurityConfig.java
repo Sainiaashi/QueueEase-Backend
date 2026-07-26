@@ -30,10 +30,13 @@ public class SecurityConfig {
                 .successHandler(oAuth2SuccessHandler)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
-                .anyRequest().authenticated()
-            );
+    .requestMatchers("/api/auth/**").permitAll()
+    .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
+    .requestMatchers("/api/menu/**").permitAll()
+    .requestMatchers("/api/queue/**").permitAll()
+    .anyRequest().authenticated()
+);
+           
         return http.build();
     }
 
