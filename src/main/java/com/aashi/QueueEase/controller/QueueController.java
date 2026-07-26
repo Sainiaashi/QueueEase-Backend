@@ -29,15 +29,17 @@ public class QueueController {
     }
 
     @GetMapping("/{id}/status")
-    public ResponseEntity<Map<String, Object>> getStatus(@PathVariable Long id) {
-        QueueEntry entry = queueService.getById(id);
-        int position = queueService.getPosition(id);
-        return ResponseEntity.ok(Map.of(
-                "id", entry.getId(),
-                "status", entry.getStatus(),
-                "position", position
-        ));
-    }
+public ResponseEntity<Map<String, Object>> getStatus(@PathVariable Long id) {
+    QueueEntry entry = queueService.getById(id);
+    int position = queueService.getPosition(id);
+    int estimatedWait = queueService.getEstimatedWaitMinutes(id);
+    return ResponseEntity.ok(Map.of(
+            "id", entry.getId(),
+            "status", entry.getStatus(),
+            "position", position,
+            "estimatedWaitMinutes", estimatedWait
+    ));
+}
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<QueueEntry> updateStatus(@PathVariable Long id, @RequestParam QueueEntry.Status status) {

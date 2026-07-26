@@ -48,4 +48,34 @@ public class QueueService {
         return queueEntryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Queue entry not found"));
     }
+
+    public int getEstimatedWaitMinutes(Long queueEntryId) {
+    List<QueueEntry> waiting = getWaitingQueue();
+
+    int totalPeopleAhead = 0;
+    boolean found = false;
+
+    for (QueueEntry entry : waiting) {
+        if (entry.getId().equals(queueEntryId)) {
+            found = true;
+            break;
+        }
+        totalPeopleAhead += entry.getPartySize();
+    }
+
+    if (!found) {
+        return 0;
+    }
+
+    int baseTimePerParty = 8;
+    int extraTimePerPerson = 2;
+
+    int partiesAhead = 0;
+    for (QueueEntry entry : waiting) {
+        if (entry.getId().equals(queueEntryId)) break;
+        partiesAhead++;
+    }
+
+    return (partiesAhead * baseTimePerParty) + (totalPeopleAhead * extraTimePerPerson);
+}
 }
