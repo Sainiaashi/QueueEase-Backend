@@ -38,13 +38,15 @@ public class SecurityConfig {
                 .successHandler(oAuth2SuccessHandler)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
-                .requestMatchers("/api/menu/**").permitAll()
-                .requestMatchers("/api/queue/**").permitAll()
-                .requestMatchers("/api/orders/**").permitAll()
-                .anyRequest().authenticated()
-            )
+    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+    .requestMatchers("/api/auth/**").permitAll()
+    .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
+    .requestMatchers("/api/menu/**").permitAll()
+    .requestMatchers("/api/queue/**").permitAll()
+    .requestMatchers("/api/orders/**").permitAll()
+    .anyRequest().authenticated()
+)
+            
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
