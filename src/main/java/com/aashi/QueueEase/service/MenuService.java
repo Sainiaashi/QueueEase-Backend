@@ -30,6 +30,7 @@ public class MenuService {
         item.setCategory(request.getCategory());
         item.setImageUrl(request.getImageUrl());
         item.setAvailable(true);
+        item.setIngredients(request.getIngredients());
         return menuItemRepository.save(item);
     }
 
@@ -41,6 +42,7 @@ public class MenuService {
         item.setPrice(request.getPrice());
         item.setCategory(request.getCategory());
         item.setImageUrl(request.getImageUrl());
+        item.setIngredients(request.getIngredients());
         return menuItemRepository.save(item);
     }
 

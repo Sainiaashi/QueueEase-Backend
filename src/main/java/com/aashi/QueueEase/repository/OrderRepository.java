@@ -1,0 +1,10 @@
+package com.aashi.QueueEase.repository;
+
+import com.aashi.QueueEase.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findByTableNumber(int tableNumber);
+    List<Order> findByStatus(Order.Status status);
+}
