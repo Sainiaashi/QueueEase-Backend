@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -23,7 +24,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private static final String FRONTEND_REDIRECT_URL = "http://localhost:5173/oauth-success";
+   @Value("${FRONTEND_URL}")
+private String frontendUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -47,6 +49,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
 
-        response.sendRedirect(FRONTEND_REDIRECT_URL + "?token=" + token);
+        response.sendRedirect(frontendUrl + "/oauth-success?token=" + token);
     }
 }
