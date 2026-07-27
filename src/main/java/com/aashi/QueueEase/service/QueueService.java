@@ -37,12 +37,15 @@ public class QueueService {
         return -1;
     }
 
-    public QueueEntry updateStatus(Long id, QueueEntry.Status status) {
-        QueueEntry entry = queueEntryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Queue entry not found"));
-        entry.setStatus(status);
-        return queueEntryRepository.save(entry);
+    public QueueEntry updateStatus(Long id, QueueEntry.Status status, Integer tableNumber) {
+    QueueEntry entry = queueEntryRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Queue entry not found"));
+    entry.setStatus(status);
+    if (tableNumber != null) {
+        entry.setTableNumber(tableNumber);
     }
+    return queueEntryRepository.save(entry);
+}
 
     public QueueEntry getById(Long id) {
         return queueEntryRepository.findById(id)

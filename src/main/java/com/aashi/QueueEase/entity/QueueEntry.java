@@ -26,6 +26,11 @@ public class QueueEntry {
 
     @Column(name = "joined_at", nullable = false, updatable = false)
     private LocalDateTime joinedAt;
+    @Column(name = "table_number")
+private Integer tableNumber;
+
+public Integer getTableNumber() { return tableNumber; }
+public void setTableNumber(Integer tableNumber) { this.tableNumber = tableNumber; }
 
     public enum Status {
         WAITING, NOTIFIED, SEATED, CANCELLED
