@@ -1,54 +1,59 @@
-☕ QueueEase - Backend
+☕ QueueEase Backend
 
-A robust Spring Boot backend powering QueueEase, a smart restaurant management platform developed during VibeAthon 6.0 – Vibecoding Hackathon 2026.
+QueueEase Backend is a production-ready Spring Boot application powering QueueEase, a smart restaurant management platform built for VibeAthon 6.0 – Vibecoding Hackathon 2026.
 
-The backend provides secure authentication, RESTful APIs, menu management, queue management, automatic bill generation, and restaurant administration, enabling seamless communication between customers and restaurant staff.
+It provides secure authentication, role-based authorization, restaurant management APIs, queue management, menu management, billing, and Google OAuth authentication through a clean REST architecture.
 
-👥 Team Details
+👥 Team Information
 
 Team Name: TeachEra
 
-Team Leader: Aashi (Solo Participant)
+Participant: Aashi (Solo Participant)
 
 Hackathon: VibeAthon 6.0 – Vibecoding Hackathon 2026
 
 🚀 Features
 🔐 Authentication
-Google OAuth Login
 JWT Authentication
-Secure API Access
-Role-Based Authorization
+Google OAuth Login
+Email OTP Verification
+Secure REST APIs
+Role-Based Authorization (Customer / Staff / Admin)
 🍽️ Menu Management
 Add Menu Items
 Update Menu Items
 Delete Menu Items
-Live Menu Availability
-View Complete Dish Ingredients
+Toggle Item Availability
+Live Menu Display
+Ingredient Transparency
 ⏳ Queue Management
 Join Virtual Queue
-Queue Status Management
-Queue Monitoring
-Customer Queue Tracking
-🧾 Billing
+Live Queue Tracking
+Queue Position Updates
+Estimated Waiting Time
+Staff Queue Management
+🧾 Order & Billing
+Place Customer Orders
 Automatic Bill Generation
-Bill Calculation
-Order Summary
-👨‍🍳 Restaurant Management
-Staff Dashboard APIs
-Menu Management APIs
-Queue Management APIs
+Bill Summary
+Order Tracking
+👨‍🍳 Restaurant Administration
+Dashboard APIs
 Customer Management
-Order Management
+Queue Monitoring
+Menu Management
+Restaurant Operations
 🛠️ Tech Stack
-Language: Java 17
-Framework: Spring Boot
-Security: Spring Security + JWT
-Database: MySQL
-ORM: Spring Data JPA (Hibernate)
-Authentication: Google OAuth
-Build Tool: Maven
-API Style: REST APIs
-Deployment: Render
+Category	Technology
+Language	Java 17
+Framework	Spring Boot
+Security	Spring Security + JWT
+Authentication	Google OAuth 2.0
+Database	MySQL (Aiven Cloud)
+ORM	Spring Data JPA (Hibernate)
+Build Tool	Maven
+API Style	REST APIs
+Deployment	Render
 📁 Project Structure
 src/
 ├── controller/
@@ -61,7 +66,7 @@ src/
 ├── exception/
 ├── util/
 └── QueueEaseApplication.java
-⚙️ Getting Started
+⚙️ Local Development
 Clone Repository
 git clone <backend-repository-url>
 
@@ -72,9 +77,6 @@ Create a MySQL database.
 
 CREATE DATABASE queueease;
 Configure Environment Variables
-
-Update application.properties or environment variables.
-
 spring.datasource.url=jdbc:mysql://localhost:3306/queueease
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
@@ -87,115 +89,144 @@ google.client.id=YOUR_GOOGLE_CLIENT_ID
 google.client.secret=YOUR_GOOGLE_CLIENT_SECRET
 Build Project
 mvn clean install
-Run Application
+Run Project
 mvn spring-boot:run
 
-Application runs on
+Backend runs at
 
-http://localhost:8080 
-Avien cloud database
+http://localhost:8080
 🌐 Deployment
+Backend
 
-Backend is deployed using Render.
-
-Live API:
+Render
 
 https://queueease-backend-ifx3.onrender.com
+Database
+
+Aiven Cloud MySQL
+
 📡 REST API Modules
 Authentication
-Register/Login
+Register
+Verify OTP
+Login
 Google OAuth
-JWT Token
+JWT Authentication
 Menu
-Get Menu
-Add Item
-Update Item
-Delete Item
-Update Availability
+Get Available Menu
+Get Recommendations
+Add Menu Item
+Update Menu Item
+Delete Menu Item
+Toggle Availability
 View Ingredients
 Queue
 Join Queue
-View Queue
-Update Queue Status
+Queue Status
+Update Queue
+Customer Queue Tracking
+Orders
+Place Order
+Update Order
+Customer Orders
 Billing
 Generate Bill
 View Bill
 Dashboard
-Manage Restaurant Operations
+Restaurant Overview
+Staff Operations
 🔄 Backend Workflow
-Authenticate User
-Validate Request
-Process Business Logic
-Access MySQL Database
-Return JSON Response
-Update Restaurant Operations
-🗄️ Database
-
-Main entities include:
-
+Client Request
+      │
+      ▼
+Spring Security
+      │
+      ▼
+JWT Authentication
+      │
+      ▼
+Controller
+      │
+      ▼
+Service Layer
+      │
+      ▼
+Repository
+      │
+      ▼
+MySQL Database
+      │
+      ▼
+JSON Response
+🗄️ Core Entities
 User
 MenuItem
 Queue
 Order
 Bill
-🚧 Project Status
+👨‍💻 Demo Staff Account
+
+Use the following credentials to explore staff features.
+
+Email
+
+evaluator1@gmail.com
+
+Password
+
+evaluator@123
+🚧 Current Status
 ✅ Completed
 JWT Authentication
+Email OTP Verification
 Google OAuth
 Menu Management
-Live Availability
-Ingredient Transparency
 Queue Management
-Automatic Bill Generation
+Customer Ordering
+Automatic Billing
 Staff Dashboard APIs
-💎 Platinum (Level 5) Status
+Live Menu Availability
+💎 Hackathon Progress
 
-The current submission successfully completes the Bronze, Silver, and Gold user stories of the VibeAthon 6.0 challenge.
+This submission successfully completes the Bronze, Silver, and Gold milestones of the VibeAthon 6.0 challenge.
 
-Planned Platinum (AI) Features
-
-The following AI-powered capabilities are planned for future development:
-
-AI-Based Wait Time Prediction
-Personalized Dish Recommendations
-Smart Inventory Prediction
-Demand Forecasting
+Planned AI Features
+AI Wait Time Prediction
+Personalized Food Recommendations
+Inventory Forecasting
+Demand Prediction
 AI Restaurant Assistant
-Intelligent Operational Insights
+Operational Insights
 
-These AI features are currently under development and are not implemented in this submission.
+These AI capabilities are planned for future development and are not included in the current submission.
 
-🤖 AI Usage
+🤖 AI Assistance
 
 This project was developed with assistance from AI tools during the hackathon.
 
-AI Tools Used
+AI Tools
 ChatGPT (OpenAI)
 Claude (Anthropic)
 AI was used for
-Project planning
-System architecture
-Backend API design
+System Design
+Architecture Planning
+Backend API Design
 Debugging
 Documentation
-Code optimization
-Presentation preparation
+Code Refactoring
+Presentation Preparation
 
-All AI-assisted suggestions and generated code were reviewed, modified, integrated, and tested by the developer before submission.
+All AI-assisted suggestions were reviewed, modified, integrated, and tested before being included in the project.
 
 🔮 Future Enhancements
-AI-Based Analytics
-Inventory Forecasting
-QR Table Ordering
+QR Code Table Ordering
 Payment Gateway Integration
 WhatsApp Notifications
-Multi-Branch Support
-Advanced Reports
-Cloud Scalability
+Multi-Branch Restaurant Support
+AI Analytics
+Inventory Management
+Cloud Auto Scaling
+Advanced Reports & Insights
 📄 License
 
-This project was developed as part of VibeAthon 6.0 – Vibecoding Hackathon 2026.
-
-It is intended for educational and demonstration purposes.
-
-// note login as staff use:- email:-evaluator1@gmail.com password:-evaluator@123
+This project was developed as part of VibeAthon 6.0 – Vibecoding Hackathon 2026 for educational and demonstration purposes.
