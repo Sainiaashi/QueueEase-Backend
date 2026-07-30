@@ -15,7 +15,7 @@ public class RecommendationService {
     @Autowired
     private MenuService menuService;
 
-    @Value("${gemini.api.key}")
+    @Value("${groq.api.key}")
     private String apiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -41,36 +41,36 @@ public class RecommendationService {
                 "ItemName | Reason";
 
         try {
-            String response = callGemini(prompt);
+            String response = callGroq(prompt);
             return parseRecommendations(response, items);
         } catch (Exception e) {
-            System.err.println("Gemini recommendation failed: " + e.getMessage());
+            System.err.println("Groq recommendation failed: " + e.getMessage());
             return fallbackRecommendations(items);
         }
     }
 
-    private String callGemini(String prompt) {
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey;
+    private String callGroq(String prompt) {
+        String url = "https://api.groq.com/openai/v1/chat/completions";
 
         Map<String, Object> body = Map.of(
-                "contents", List.of(
-                        Map.of("parts", List.of(Map.of("text", prompt)))
+                "model", "llama-3.1-8b-instant",
+                "messages", List.of(
+                        Map.of("role", "user", "content", prompt)
                 )
         );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(apiKey);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
         ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
 
         Map responseBody = response.getBody();
-        List candidates = (List) responseBody.get("candidates");
-        Map firstCandidate = (Map) candidates.get(0);
-        Map content = (Map) firstCandidate.get("content");
-        List parts = (List) content.get("parts");
-        Map firstPart = (Map) parts.get(0);
-        return (String) firstPart.get("text");
+        List choices = (List) responseBody.get("choices");
+        Map firstChoice = (Map) choices.get(0);
+        Map message = (Map) firstChoice.get("message");
+        return (String) message.get("content");
     }
 
     private List<Map<String, String>> parseRecommendations(String response, List<MenuItem> items) {
