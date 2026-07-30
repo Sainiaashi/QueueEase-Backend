@@ -197,3 +197,5 @@ Cloud Scalability
 This project was developed as part of VibeAthon 6.0 – Vibecoding Hackathon 2026.
 
 It is intended for educational and demonstration purposes.
+
+// note login as staff use:- email:-evaluator1@gmail.com password:-evaluator@123
