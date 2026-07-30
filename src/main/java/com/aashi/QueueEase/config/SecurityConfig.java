@@ -22,6 +22,9 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
+private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
     private OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Autowired
@@ -29,28 +32,30 @@ public class SecurityConfig {
 
     
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .oauth2Login(oauth2 -> oauth2
-                .successHandler(oAuth2SuccessHandler)
-            )
-            .authorizeHttpRequests(auth -> auth
-    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-    .requestMatchers("/api/auth/**").permitAll()
-    .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
-    .requestMatchers("/api/menu/**").permitAll()
-    .requestMatchers("/api/queue/**").permitAll()
-    .requestMatchers("/api/orders/**").permitAll()
-    .anyRequest().authenticated()
-)
-            
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .exceptionHandling(exception -> exception
+            .authenticationEntryPoint(restAuthenticationEntryPoint)
+        )
+        .oauth2Login(oauth2 -> oauth2
+            .successHandler(oAuth2SuccessHandler)
+        )
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
+            .requestMatchers("/api/menu/**").permitAll()
+            .requestMatchers("/api/queue/**").permitAll()
+            .requestMatchers("/api/orders/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+}
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
