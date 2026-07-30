@@ -3,11 +3,14 @@ package com.aashi.QueueEase.controller;
 import com.aashi.QueueEase.dto.MenuItemRequest;
 import com.aashi.QueueEase.entity.MenuItem;
 import com.aashi.QueueEase.service.MenuService;
+import com.aashi.QueueEase.service.RecommendationService;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 import java.util.List;
 
@@ -17,11 +20,20 @@ public class MenuController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+private RecommendationService recommendationService;
 
     @GetMapping
     public ResponseEntity<List<MenuItem>> getAllItems() {
         return ResponseEntity.ok(menuService.getAllItems());
     }
+
+    
+
+@GetMapping("/recommendations")
+public ResponseEntity<List<Map<String, String>>> getRecommendations() {
+    return ResponseEntity.ok(recommendationService.getRecommendations());
+}
 
     @GetMapping("/available")
     public ResponseEntity<List<MenuItem>> getAvailableItems() {
